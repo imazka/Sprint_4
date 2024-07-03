@@ -1,13 +1,14 @@
-package org.example.test_of_according_list;
+package org.example.test.accordinglist;
 
 import org.example.BaseTest;
 import org.example.page.StartPageObject;
-import org.junit.*;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
-import org.openqa.selenium.JavascriptExecutor;
 
 import java.util.concurrent.TimeUnit;
 
@@ -23,6 +24,7 @@ public class AccordingListTest extends BaseTest {
     private String index;
 
     public AccordingListTest(String index, String expectedText) {
+        super();
         this.index = index;
         this.expectedText = expectedText;
     }
@@ -42,7 +44,7 @@ public class AccordingListTest extends BaseTest {
     }
 
     @Parameterized.Parameters
-    public static Object[][] getData() {
+    public static Object[][] getParameters() {
         return new Object[][]{
                 {"0", TextsForAccordingList.TEXT_1},
                 {"1", TextsForAccordingList.TEXT_2},
@@ -59,23 +61,27 @@ public class AccordingListTest extends BaseTest {
     @Test
     public void checkTextInAccordingListElements() {
 
-        StartPageObject startPageObject = new StartPageObject(driver);
+        StartPageObject startPageObject = new StartPageObject();
+
         //xPath для строки со стрелочкой
         String xPathHeadingFull = startPageObject.xpathHeading + index + "']";
+
         //xPath для выпадающего элемента с текстом
         String xPathPanelFull = startPageObject.xpathPanel + index + "']";
+
         //Ожидание видимости элемента со стрелочкой
         startPageObject.waitForVisibilityOfElement(driver, By.xpath(xPathHeadingFull));
+
         //Скролл к строке со стрелочкой
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView(true);", driver.findElement(By.xpath(xPathHeadingFull)));
+        startPageObject.scrollToElement(By.xpath(xPathHeadingFull));
+
         //Клик по элементу со стрелочкой
-        driver.findElement(By.xpath(xPathHeadingFull)).click();
+        startPageObject.clickElementWithArrow(xPathHeadingFull);
+
         //Проверка текста в появившемся элементе на соответствие заявленному и его видимость
         assertTrue(startPageObject.isElementDisplayed(xPathPanelFull));
         assertEquals("Выпадающий текст не совпадает с ожидаемым",
                 expectedText, driver.findElement(By.xpath(xPathPanelFull)).getText());
-
     }
 
     @AfterClass

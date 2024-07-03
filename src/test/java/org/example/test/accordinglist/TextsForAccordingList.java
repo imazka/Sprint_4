@@ -1,4 +1,4 @@
-package org.example.test_of_according_list;
+package org.example.test.accordinglist;
 /**
  * Класс для хранения строковых данных
  */

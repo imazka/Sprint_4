@@ -1,4 +1,4 @@
-package org.example.test_of_order_of_scooter;
+package org.example.test.oderscooter;
 
 import org.openqa.selenium.By;
 
@@ -9,14 +9,20 @@ public class User {
     private String metroStation;
     private String phone;
     private By orderButton;
+    private String comment;
 
-    public User(String name, String surname, String adress, String metroStation, String phone, By orderButton) {
+    public User(String name, String surname, String adress, String metroStation, String phone, By orderButton, String comment) {
         this.name = name;
         this.surname = surname;
         this.adress = adress;
         this.metroStation = metroStation;
         this.phone = phone;
         this.orderButton = orderButton;
+        this.comment = comment;
+    }
+
+    public String getComment() {
+        return comment;
     }
 
     public String getName() {
