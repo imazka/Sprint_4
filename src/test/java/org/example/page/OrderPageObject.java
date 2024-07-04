@@ -22,16 +22,12 @@ public class OrderPageObject extends BasePage {
     private String orderStartedText = "Заказ оформлен";
     private By selectMetroStation = By.className("select-search__row");
 
-    public By getOrderStartedHeader() {
-        return orderStartedHeader;
+    public String getOrderStartedHeaderText() {
+        return driver.findElement(orderStartedHeader).getText();
     }
 
     public String getOrderStartedText() {
         return orderStartedText;
-    }
-
-    public void clickStartOrderButton (By startOrderButtonBy) {
-        driver.findElement(startOrderButtonBy).click();
     }
 
     public void setNameField(String nameFromParams) {

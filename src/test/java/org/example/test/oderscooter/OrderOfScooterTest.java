@@ -15,8 +15,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertTrue;
-import static org.example.page.StartPageObject.firstButton;
-import static org.example.page.StartPageObject.secondButton;
 
 /**
  * Тест заказа самоката
@@ -34,8 +32,8 @@ public class OrderOfScooterTest extends BaseTest {
     public static List<User> getParameters() {
         List<User> userList = new ArrayList<>();
         //Генерируем тестовые данные
-        userList.add(new User("Виктор", "Васильев", "г. Москва, ул. Пресненская набережная, д. 8", "Комсомольская", "+79467564354", firstButton, "Домофон не работает"));
-        userList.add(new User("Алексей", "Виноградов", "г. Москва, ул. Фрунзе, д. 5, кв. 1", "Фрунзенская", "+79264758623", secondButton, "Домофон работает"));
+        userList.add(new User("Виктор", "Васильев", "г. Москва, ул. Пресненская набережная, д. 8", "Комсомольская", "+79467564354", 1, "Домофон не работает"));
+        userList.add(new User("Алексей", "Виноградов", "г. Москва, ул. Фрунзе, д. 5, кв. 1", "Фрунзенская", "+79264758623", 2,"Домофон работает"));
 
         return userList;
     }
@@ -58,13 +56,13 @@ public class OrderOfScooterTest extends BaseTest {
     @Test
     public void orderingOfScooter() {
 
-        OrderPageObject orderPageObject = new OrderPageObject();
+        StartPageObject startPageObject = new StartPageObject();
 
         //Скролл до кнопки "Заказать"
-        orderPageObject.scrollToElement(user.getOrderButton());
+        startPageObject.scrollToElement(startPageObject.getButton(user.getNumber()));
 
-        //Клик по кнопке "Заказать"
-        orderPageObject.clickStartOrderButton(user.getOrderButton());
+        //Клик по кнопке "Заказать" и создание экземпляра следующей страницы
+        OrderPageObject orderPageObject = startPageObject.clickStartOrderButton(startPageObject.getButton(user.getNumber()));
 
         //Ввод данных в поля
         orderPageObject.setNameField(user.getName());
@@ -97,7 +95,7 @@ public class OrderOfScooterTest extends BaseTest {
         orderPageObject.clickYesButton();
 
         //Проверка появления информации о статусе заказа
-        assertTrue("Заказ не оформлен", driver.findElement(orderPageObject.getOrderStartedHeader()).getText().contains(orderPageObject.getOrderStartedText()));
+        assertTrue("Заказ не оформлен", orderPageObject.getOrderStartedHeaderText().contains(orderPageObject.getOrderStartedText()));
     }
 
     @After

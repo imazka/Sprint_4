@@ -8,16 +8,16 @@ public class User {
     private String adress;
     private String metroStation;
     private String phone;
-    private By orderButton;
+    private int number;
     private String comment;
 
-    public User(String name, String surname, String adress, String metroStation, String phone, By orderButton, String comment) {
+    public User(String name, String surname, String adress, String metroStation, String phone, int number, String comment) {
         this.name = name;
         this.surname = surname;
         this.adress = adress;
         this.metroStation = metroStation;
         this.phone = phone;
-        this.orderButton = orderButton;
+        this.number = number;
         this.comment = comment;
     }
 
@@ -45,7 +45,7 @@ public class User {
         return phone;
     }
 
-    public By getOrderButton() {
-        return orderButton;
+    public int getNumber() {
+        return number;
     }
 }
